@@ -1,6 +1,4 @@
 import streamlit as st
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
 import datetime
 
 # Configurando o layout da página como "wide" para usar toda a largura da tela
