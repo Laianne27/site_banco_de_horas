@@ -1,4 +1,7 @@
 import streamlit as st
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+import datetime
 
 # Configurando o layout da página como "wide" para usar toda a largura da tela
 st.set_page_config(layout="wide")
@@ -10,7 +13,6 @@ data = st.date_input("Data", datetime.date.today())
 hora_entrada = st.time_input("Horário de Entrada")
 hora_saida = st.time_input("Horário de Saída")
 pausa = st.time_input("Pausa")
-
 
 
 
