@@ -4,9 +4,40 @@ import streamlit as st
 from oauth2client.service_account import ServiceAccountCredentials
 from datetime import datetime, timedelta
 
+# Defina o escopo
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+
+# Carregue suas credenciais
+# Verifique se o nome do arquivo JSON está correto e se ele está no mesmo diretório do script ou se o caminho está correto.
+creds = ServiceAccountCredentials.from_json_keyfile_name('site-cq-moinho-727d76d37cc2.json', scope)
+
+# Autorize o cliente gspread
+gc = gspread.authorize(creds)
+
+# Crie uma nova planilha (substitua "Nova_Planilha" pelo nome que deseja dar à nova planilha)
+nova_planilha = gc.create("BD_CQ_MOINHO_SITE")
+
+# Compartilhe a planilha com permissões de escrita, se necessário
+# O e-mail deve ser o da sua conta ou de quem poderá acessá-la
+nova_planilha.share('laianne.cst27@gmail.com', perm_type='user', role='writer')
+
+# Acesse a primeira aba da nova planilha
+worksheet = nova_planilha.get_worksheet(0)
+
+# Opcional: Renomeie a aba, se quiser
+worksheet.update_title('Dados')
+
+# Exemplo de inserir dados
+worksheet.append_row(['Nome', 'Entrada', 'Saída'])  # Adiciona uma linha de cabeçalho
+
+# Obtenha o link da planilha e mostre
+link_planilha = nova_planilha.url
+print(f"Nova planilha criada! Acesse-a em: {link_planilha}")
+
+
 # Autenticação
 scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name("site-cq-moinho-83dfb808e013.json", scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name("site-cq-moinho-727d76d37cc2.json", scope)
 client = gspread.authorize(creds)
 
 # Abrir a planilha
